@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Note = require('./models/note')
 
 const password = process.argv[2] 
 const newName = process.argv[3]
@@ -37,11 +38,15 @@ const getData = () => {
       });
 } 
 
+const saveData = () => {
+    person.save().then(result => {
+        console.log(`added ${newName} number ${newNumber} to phonebook`)
+        mongoose.connection.close()
+      })
+}
+
 if (process.argv.length === 3) {
     getData()
 } else {
-    person.save().then(result => {
-      console.log(`added ${newName} number ${newNumber} to phonebook`)
-      mongoose.connection.close()
-    })
+    saveData()
 }

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const Note = require('./models/note')
 
 const password = process.argv[2] 
 const newName = process.argv[3]

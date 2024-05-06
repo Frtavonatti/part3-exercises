@@ -42,28 +42,28 @@ app.get('/api/persons/:id', (req, res) => {
 //     res.status(204).end()
 // }) 
 
-// app.post('/api/persons', (req, res) => {
-//     const body = req.body
+app.post('/api/persons', (req, res) => {
+    const body = req.body
 
-//     if (!body.name || !body.number) {
-//         return res.status(400)
-//             .json({ error: 'Nombre y número son campos requeridos.' });
-//     } 
+    if (!body.name || !body.number) {
+        return res.status(400)
+            .json({ error: 'Nombre y número son campos requeridos.' });
+    } 
     
-//     if (persons.some(person => person.name === body.name)) {
-//         return res.status(400)
-//             .json({ error: 'Ya existe una persona con este nombre.' });
-//     }
+    // if (persons.some(person => person.name === body.name)) {
+    //     return res.status(400)
+    //         .json({ error: 'Ya existe una persona con este nombre.' });
+    // }
 
-//     const newPerson = {
-//         id: Math.floor(Math.random() * (100 - 1) + 1),
-//         name: body.name,
-//         number: body.number
-//     }
+    const newPerson = new Person ({
+        name: body.name,
+        number: body.number
+    })
 
-//     persons = persons.concat(newPerson)
-//     res.json(newPerson)
-// })
+    newPerson.save().then(savedPerson => {
+        res.json(savedPerson)
+      })
+})
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

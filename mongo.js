@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 
-if (process.argv.length<3) {
-  console.log('give password as argument')
-  process.exit(1)
-}
+const password = process.argv[2] 
+const newName = process.argv[3]
+const newNumber = process.argv[4]
 
-const password = process.argv[2]
+if (process.argv.length < 3) {
+    console.log('give password as argument')
+    process.exit(1)
+}
 
 const url =
   `mongodb+srv://frtavonatti:${password}@clusteragenda.btcobqt.mongodb.net/?retryWrites=true&w=majority&appName=ClusterAgenda`
@@ -22,11 +24,24 @@ const personSchema = new mongoose.Schema({
 const Person = mongoose.model('Person', personSchema)
 
 const person = new Person({
-  name: 'Sigmund Freud',
-  number: '999-999888777',
+  name: newName,
+  number: newNumber,
 })
 
-person.save().then(result => {
-  console.log('contact saved!')
-  mongoose.connection.close()
-})
+const getData = () => {
+    Person.find({}).then(result => {
+        result.forEach(person => {
+          console.log(person)
+        })
+        mongoose.connection.close()
+      });
+} 
+
+if (process.argv.length === 3) {
+    getData()
+} else {
+    person.save().then(result => {
+      console.log(`added ${newName} number ${newNumber} to phonebook`)
+      mongoose.connection.close()
+    })
+}

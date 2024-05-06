@@ -1,18 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 
-// const password = process.argv[2] 
-// const newName = process.argv[3]
-// const newNumber = process.argv[4]
-
-// if (process.argv.length < 3) {
-//     console.log('give password as argument')
-//     process.exit(1)
-// }
-
-// const url =
-//   `mongodb+srv://frtavonatti:${password}@clusteragenda.btcobqt.mongodb.net/?retryWrites=true&w=majority&appName=ClusterAgenda`
-
 mongoose.set('strictQuery',false)
 
 const url = process.env.MONGODB_URI
@@ -40,8 +28,3 @@ personSchema.set('toJSON', {
   })
 
 module.exports = mongoose.model('Person', personSchema)
-
-// const person = new Person({
-//   name: newName,
-//   number: newNumber,
-// })

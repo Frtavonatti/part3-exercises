@@ -2,6 +2,7 @@
 const express = require('express')
 const morgan = require('morgan')
 // const cors = require('cors')
+const mongoose = require('mongoose')
 const app = express()
 const Person = require('./model/person')
 
@@ -25,12 +26,13 @@ app.get('/api/persons/:id', (req, res) => {
     })
 })
 
-// app.delete('/api/persons/:id', (req, res) => {
-//     const id = Number(req.params.id)
-//     person.filter(person => person.id !== id)
-
-//     res.status(204).end()
-// }) 
+app.delete('/api/persons/:id', (req, res) => {
+    const id = req.params.id;
+    Person.findOneAndDelete({_id: id})
+        .then(() => {
+            res.status(204).end();
+        })
+});
 
 app.post('/api/persons', (req, res) => {
     const body = req.body
